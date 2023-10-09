@@ -3,25 +3,30 @@
 </template>
 
 <script lang="ts" setup>
-import AMapLoader from "@amap/amap-jsapi-loader"
+import * as AMapLoader from "@amap/amap-jsapi-loader"
 import "@amap/amap-jsapi-types"
 
 const amapKey = import.meta.env.VITE_AMAP_KEY
 
-const map = shallowRef(null)
+let map: AMap.Map | null = null
 
-const selfMarker = shallowRef(null)
+let selfMarker: AMap.Marker | null = null
 
-const clickHandler = function (e) {
-  if (selfMarker.value) {
-    map.value.remove(selfMarker.value)
+// 当点击地图时，在点击的位置添加标记
+const clickHandler = function (e: any) {
+  if (!map) {
+    return
   }
 
-  selfMarker.value = new AMap.Marker({
+  if (selfMarker) {
+    map.remove(selfMarker)
+  }
+
+  selfMarker = new AMap.Marker({
     position: e.lnglat,
   })
 
-  map.value.add(selfMarker.value)
+  map.add(selfMarker)
 }
 
 function initMap() {
@@ -31,7 +36,7 @@ function initMap() {
     plugins: [""], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
   })
     .then((AMap) => {
-      map.value = new AMap.Map(
+      map = new AMap.Map(
         "container", //设置地图容器id
         {
           viewMode: "3D", //是否为3D地图模式
@@ -41,7 +46,7 @@ function initMap() {
       )
 
       // 绑定事件
-      map.value.on("click", clickHandler)
+      map!.on("click", clickHandler)
     })
     .catch((e) => {
       console.log(e)
@@ -50,5 +55,9 @@ function initMap() {
 
 onMounted(() => {
   initMap()
+})
+
+onUnmounted(() => {
+  map?.destroy()
 })
 </script>

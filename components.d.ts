@@ -8,8 +8,5 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AMap: typeof import('./src/components/AMap.vue')['default']
-    EMap: typeof import('./src/components/EMap.vue')['default']
-    Map: typeof import('./src/components/Map.vue')['default']
-    MapContainer: typeof import('./src/components/MapContainer.vue')['default']
   }
 }

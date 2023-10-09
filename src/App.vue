@@ -1,3 +1,7 @@
 <template>
-  <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  <MapContainer />
 </template>
+
+<script lang="ts" setup>
+import MapContainer from "./components/MapContainer.vue"
+</script>

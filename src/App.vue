@@ -1,5 +1,5 @@
 <template>
   <div class="w-screen h-screen overflow-hidden">
-    <MapContainer />
+    <AMap />
   </div>
 </template>

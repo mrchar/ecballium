@@ -1,7 +1,5 @@
 <template>
-  <MapContainer />
+  <div class="w-screen h-screen overflow-hidden">
+    <MapContainer />
+  </div>
 </template>
-
-<script lang="ts" setup>
-import MapContainer from "./components/MapContainer.vue"
-</script>

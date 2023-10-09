@@ -1,9 +1,8 @@
 <template>
-  <div id="container"></div>
+  <div id="container" class="w-full h-full"></div>
 </template>
 
 <script lang="ts">
-import { shallowRef } from "vue"
 import AMapLoader from "@amap/amap-jsapi-loader"
 
 const amapKey = import.meta.env.VITE_AMAP_KEY
@@ -41,12 +40,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-#container {
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  height: 800px;
-}
-</style>

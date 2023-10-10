@@ -25,18 +25,33 @@ function initMap() {
   AMapLoader.load({
     key: amapKey, // 申请好的Web端开发者Key，首次调用 load 时必填
     version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-    plugins: ["AMap.ToolBar", "AMap.Scale", "AMap.AutoComplete", "AMap.PlaceSearch"] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+    plugins: ["AMap.ToolBar", "AMap.ControlBar", "AMap.Scale", "AMap.Geolocation", "AMap.AutoComplete", "AMap.PlaceSearch"] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
   })
     .then((AMap) => {
       map = new AMap.Map(
         "container", //设置地图容器id
-        { resizeEnable: true }
+        { viewMode: "3D", resizeEnable: true }
       )
 
       // 添加控件
-      map!.addControl(new AMap.ToolBar())
+      map!.addControl(new AMap.ControlBar({
+        position: {
+          top: "10px",
+          right: "10px"
+        }
+      }))
+      map!.addControl(new AMap.ToolBar({ position: { top: "120px", right: "40px" } }))
       map!.addControl(new AMap.Scale())
 
+      // 添加定位按钮
+      map!.addControl(new AMap.Geolocation({
+        position: { bottom: "40px", right: "40px" },
+        enableHighAccuracy: true, // 是否使用高精度定位，默认：true
+        timeout: 10000, // 设置定位超时时间，默认：无穷大
+        zoomToAccuracy: true //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+      }))
+
+      // 添加搜索
       const auto = new AMap.AutoComplete({ input: "search-input" })
       const placeSearch = new AMap.PlaceSearch({
         map: map
